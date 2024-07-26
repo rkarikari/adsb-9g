@@ -29,7 +29,7 @@
 
 set -e
 
-IPATH=/usr/local/share/adsbexchange
+IPATH=/usr/local/share/adsb9g
 
 ## we need to install stuff that require root, check for that
 if [ "$(id -u)" != "0" ]; then
@@ -44,7 +44,7 @@ fi
 if [ -f /boot/adsb-config.txt ]; then
     echo --------
     echo "You are using the adsbx image, the feed setup script does not need to be installed."
-    echo "You should already be feeding, check here: https://adsbexchange.com/myip/"
+    echo "You should already be feeding, check here: https://adsb9g.com/myip/"
     echo "If the feed isn't working, check/correct the configuration using nano:"
     echo --------
     echo "sudo nano /boot/adsb-config.txt"

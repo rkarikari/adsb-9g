@@ -95,10 +95,10 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-REPO="https://github.com/adsbexchange/feedclient.git"
+REPO="https://github.com/adsb9g/feedclient.git"
 BRANCH="master"
 
-IPATH=/usr/local/share/adsbexchange
+IPATH=/usr/local/share/adsb9g
 GIT="$IPATH/git"
 mkdir -p $IPATH
 
@@ -125,9 +125,9 @@ if [ -f /boot/adsb-config.txt ]; then
     source /boot/adsb-config.txt
     source /boot/adsbx-env
 else
-    source /etc/default/adsbexchange
-    if ! grep -qs -e UAT_INPUT /etc/default/adsbexchange; then
-        cat >> /etc/default/adsbexchange <<"EOF"
+    source /etc/default/adsb9g
+    if ! grep -qs -e UAT_INPUT /etc/default/adsb9g; then
+        cat >> /etc/default/adsb9g <<"EOF"
 
 # this is the source for 978 data, use port 30978 from dump978 --raw-port
 # if you're not receiving 978, don't worry about it, not doing any harm!
@@ -155,7 +155,7 @@ rm -rf /usr/local/share/adsb-exchange &>/dev/null
 cp "$GIT/uninstall.sh" "$IPATH"
 cp "$GIT"/scripts/*.sh "$IPATH"
 
-UNAME=adsbexchange
+UNAME=adsb9g
 if ! id -u "${UNAME}" &>/dev/null
 then
     # 2nd syntax is for fedora / centos
@@ -182,7 +182,7 @@ echo
 bash "$IPATH/git/create-uuid.sh"
 
 VENV=$IPATH/venv
-if [[ -f /usr/local/share/adsbexchange/venv/bin/python3.7 ]] && command -v python3.9 &>/dev/null;
+if [[ -f /usr/local/share/adsb9g/venv/bin/python3.7 ]] && command -v python3.9 &>/dev/null;
 then
     rm -rf "$VENV"
 fi
@@ -191,7 +191,7 @@ MLAT_REPO="https://github.com/adsbxchange/mlat-client.git"
 MLAT_BRANCH="master"
 MLAT_VERSION="$(git ls-remote $MLAT_REPO $MLAT_BRANCH | cut -f1 || echo $RANDOM-$RANDOM )"
 if [[ $REINSTALL != yes ]] && grep -e "$MLAT_VERSION" -qs $IPATH/mlat_version \
-    && grep -qs -e '#!' "$VENV/bin/mlat-client" && { systemctl is-active adsbexchange-mlat &>/dev/null || [[ "${MLAT_DISABLED}" == "1" ]]; }
+    && grep -qs -e '#!' "$VENV/bin/mlat-client" && { systemctl is-active adsb9g-mlat &>/dev/null || [[ "${MLAT_DISABLED}" == "1" ]]; }
 then
     echo
     echo "mlat-client already installed, git hash:"
@@ -232,33 +232,33 @@ else
         echo "--------------------"
         echo "Installing mlat-client failed, if there was an old version it has been restored."
         echo "Will continue installation to try and get at least the feed client working."
-        echo "Please repot this error to the adsbexchange forums or discord."
+        echo "Please repot this error to the adsb9g forums or discord."
         echo "--------------------"
     fi
 fi
 
 echo 50
 
-# copy adsbexchange-mlat service file
-cp "$GIT"/scripts/adsbexchange-mlat.service /lib/systemd/system
+# copy adsb9g-mlat service file
+cp "$GIT"/scripts/adsb9g-mlat.service /lib/systemd/system
 
 echo 60
 
-if ls -l /etc/systemd/system/adsbexchange-mlat.service 2>&1 | grep '/dev/null' &>/dev/null; then
+if ls -l /etc/systemd/system/adsb9g-mlat.service 2>&1 | grep '/dev/null' &>/dev/null; then
     echo "--------------------"
-    echo "CAUTION, adsbexchange-mlat is masked and won't run!"
+    echo "CAUTION, adsb9g-mlat is masked and won't run!"
     echo "If this is unexpected for you, please report this issue"
     echo "--------------------"
     sleep 3
 else
     if [[ "${MLAT_DISABLED}" == "1" ]]; then
-        systemctl disable adsbexchange-mlat || true
-        systemctl stop adsbexchange-mlat || true
+        systemctl disable adsb9g-mlat || true
+        systemctl stop adsb9g-mlat || true
     else
-        # Enable adsbexchange-mlat service
-        systemctl enable adsbexchange-mlat >> $LOGFILE || true
-        # Start or restart adsbexchange-mlat service
-        systemctl restart adsbexchange-mlat || true
+        # Enable adsb9g-mlat service
+        systemctl enable adsb9g-mlat >> $LOGFILE || true
+        # Start or restart adsb9g-mlat service
+        systemctl restart adsb9g-mlat || true
     fi
 fi
 
@@ -275,7 +275,7 @@ READSB_VERSION="$(git ls-remote $READSB_REPO $READSB_BRANCH | cut -f1 || echo $R
 READSB_GIT="$IPATH/readsb-git"
 READSB_BIN="$IPATH/feed-adsbx"
 if [[ $REINSTALL != yes ]] && grep -e "$READSB_VERSION" -qs $IPATH/readsb_version \
-    && "$READSB_BIN" -V && systemctl is-active adsbexchange-feed &>/dev/null
+    && "$READSB_BIN" -V && systemctl is-active adsb9g-feed &>/dev/null
 then
     echo
     echo "Feed client already installed, git hash:"
@@ -308,19 +308,19 @@ fi
 
 #end compile readsb
 
-cp "$GIT"/scripts/adsbexchange-feed.service /lib/systemd/system
+cp "$GIT"/scripts/adsb9g-feed.service /lib/systemd/system
 
 echo 82
 
-if ! ls -l /etc/systemd/system/adsbexchange-feed.service 2>&1 | grep '/dev/null' &>/dev/null; then
-    # Enable adsbexchange-feed service
-    systemctl enable adsbexchange-feed >> $LOGFILE || true
+if ! ls -l /etc/systemd/system/adsb9g-feed.service 2>&1 | grep '/dev/null' &>/dev/null; then
+    # Enable adsb9g-feed service
+    systemctl enable adsb9g-feed >> $LOGFILE || true
     echo 92
-    # Start or restart adsbexchange-feed service
-    systemctl restart adsbexchange-feed || true
+    # Start or restart adsb9g-feed service
+    systemctl restart adsb9g-feed || true
 else
     echo "--------------------"
-    echo "CAUTION, adsbexchange-feed.service is masked and won't run!"
+    echo "CAUTION, adsb9g-feed.service is masked and won't run!"
     echo "If this is unexpected for you, please report this issue"
     echo "--------------------"
     sleep 3
@@ -328,32 +328,32 @@ fi
 
 echo 94
 
-systemctl is-active adsbexchange-feed &>/dev/null || {
+systemctl is-active adsb9g-feed &>/dev/null || {
     rm -f $IPATH/readsb_version
     echo "---------------------------------"
-    journalctl -u adsbexchange-feed | tail -n10
+    journalctl -u adsb9g-feed | tail -n10
     echo "---------------------------------"
-    echo "adsbexchange-feed service couldn't be started, please report this error to the adsbexchange forum or discord."
+    echo "adsb9g-feed service couldn't be started, please report this error to the adsb9g forum or discord."
     echo "Try an copy as much of the output above and include it in your report, thank you!"
     echo "---------------------------------"
     exit 1
 }
 
 echo 96
-[[ "${MLAT_DISABLED}" == "1" ]] || systemctl is-active adsbexchange-mlat &>/dev/null || {
+[[ "${MLAT_DISABLED}" == "1" ]] || systemctl is-active adsb9g-mlat &>/dev/null || {
     rm -f $IPATH/mlat_version
     echo "---------------------------------"
-    journalctl -u adsbexchange-mlat | tail -n10
+    journalctl -u adsb9g-mlat | tail -n10
     echo "---------------------------------"
-    echo "adsbexchange-mlat service couldn't be started, please report this error to the adsbexchange forum or discord."
+    echo "adsb9g-mlat service couldn't be started, please report this error to the adsb9g forum or discord."
     echo "Try an copy as much of the output above and include it in your report, thank you!"
     echo "---------------------------------"
     exit 1
 }
 
 # Remove old method of starting the feed scripts if present from rc.local
-# Kill the old adsbexchange scripts in case they are still running from a previous install including spawned programs
-for name in adsbexchange-netcat_maint.sh adsbexchange-socat_maint.sh adsbexchange-mlat_maint.sh; do
+# Kill the old adsb9g scripts in case they are still running from a previous install including spawned programs
+for name in adsb9g-netcat_maint.sh adsb9g-socat_maint.sh adsb9g-mlat_maint.sh; do
     if grep -qs -e "$name" /etc/rc.local; then
         sed -i -e "/$name/d" /etc/rc.local || true
     fi
@@ -363,13 +363,13 @@ for name in adsbexchange-netcat_maint.sh adsbexchange-socat_maint.sh adsbexchang
     fi
 done
 
-# in case the mlat-client service using /etc/default/mlat-client as config is using adsbexchange as a host, disable the service
-if grep -qs 'SERVER_HOSTPORT.*feed.adsbexchange.com' /etc/default/mlat-client &>/dev/null; then
+# in case the mlat-client service using /etc/default/mlat-client as config is using adsb9g as a host, disable the service
+if grep -qs 'SERVER_HOSTPORT.*feed.adsb9g.com' /etc/default/mlat-client &>/dev/null; then
     systemctl disable --now mlat-client >> $LOGFILE 2>&1 || true
 fi
 
-if [[ -f /etc/default/adsbexchange ]]; then
-    sed -i -e 's/feed.adsbexchange.com,30004,beast_reduce_out,feed.adsbexchange.com,64004/feed1.adsbexchange.com,30004,beast_reduce_out,feed2.adsbexchange.com,64004/' /etc/default/adsbexchange || true
+if [[ -f /etc/default/adsb9g ]]; then
+    sed -i -e 's/feed.adsb9g.com,30004,beast_reduce_out,feed.adsb9g.com,64004/feed1.adsb9g.com,30004,beast_reduce_out,feed2.adsb9g.com,64004/' /etc/default/adsb9g || true
 fi
 
 
@@ -384,15 +384,15 @@ Thanks for choosing to share your data with ADS-B Exchange!
 
 If you're curious, check your feed status after 5 min:
 
-https://adsbexchange.com/myip/
+https://adsb9g.com/myip/
 http://adsbx.org/sync
 
 Question? Issues? Go here:
-https://www.adsbexchange.com/forum/threads/adsbexchange-setup-scripts.631609/
+https://www.adsb9g.com/forum/threads/adsb9g-setup-scripts.631609/
 https://discord.gg/n9dGbkTtZm
 
 Webinterface to show the data transmitted? Run this command:
-sudo bash /usr/local/share/adsbexchange/git/install-or-update-interface.sh
+sudo bash /usr/local/share/adsb9g/git/install-or-update-interface.sh
 "
 
 INPUT_IP=$(echo $INPUT | cut -d: -f1)
