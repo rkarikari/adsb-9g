@@ -10,7 +10,7 @@
 ## 2: Install the adsb9g feed client
 
 ```
-curl -L -o /tmp/axfeed.sh https://github.com/rkarikari/feed.sh
+curl -L -o /tmp/axfeed.sh https://raw.githubusercontent.com/rkarikari/adsb-9g/master/feed.sh
 sudo bash /tmp/axfeed.sh
 ```
 
@@ -22,7 +22,7 @@ sudo bash /tmp/axfeed.sh
 ## 4: Optional: Install the stats package for an online map that shows only planes received by you:
 
 ```
-curl -L -o /tmp/axstats.sh https://github.com/rkarikari/stats.sh
+curl -L -o /tmp/axstats.sh https:///stats.sh
 sudo bash /tmp/axstats.sh
 
 adsb9g-showurl
