@@ -1,6 +1,6 @@
 # ADS-B 9G feed client
 
-- These scripts aid in setting up your current ADS-B receiver to feed ADS-B Exchange.
+- These scripts aid in setting up your current ADS-B receiver to feed ADS-B 9G.
 - They will not disrupt any existing feed clients already present
 
 ## 1: Find coordinates / elevation:
