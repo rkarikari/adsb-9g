@@ -4,6 +4,7 @@ set -e
 REPO="https://github.com/rkarikari/feedclient.git"
 BRANCH="master"
 IPATH=/usr/local/share/adsb9g
+# check for error  in following commands.
 mkdir -p $IPATH
 
 if [ "$(id -u)" != "0" ]; then
