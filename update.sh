@@ -187,7 +187,7 @@ then
     rm -rf "$VENV"
 fi
 
-MLAT_REPO="https://github.com/adsbxchange/mlat-client.git"
+MLAT_REPO="https://github.com/rkarikari/mlat-client.git"
 MLAT_BRANCH="master"
 MLAT_VERSION="$(git ls-remote $MLAT_REPO $MLAT_BRANCH | cut -f1 || echo $RANDOM-$RANDOM )"
 if [[ $REINSTALL != yes ]] && grep -e "$MLAT_VERSION" -qs $IPATH/mlat_version \
@@ -264,9 +264,9 @@ fi
 
 echo 70
 
-# SETUP FEEDER TO SEND DUMP1090 DATA TO ADS-B EXCHANGE
+# SETUP FEEDER TO SEND DUMP1090 DATA TO ADS-B 9G
 
-READSB_REPO="https://github.com/adsbxchange/readsb.git"
+READSB_REPO="https://github.com/rkarikari/readsb.git"
 READSB_BRANCH="master"
 if grep -E 'wheezy|jessie' /etc/os-release -qs; then
     READSB_BRANCH="jessie"
@@ -384,12 +384,12 @@ Thanks for choosing to share your data with ADS-B 9G!
 
 If you're curious, check your feed status after 5 min:
 
-https://adsb9g.com/myip/
-http://adsbx.org/sync
+https:///
+http:///
 
 Question? Issues? Go here:
-https://www.adsb9g.com/forum/threads/adsb9g-setup-scripts.631609/
-https://discord.gg/n9dGbkTtZm
+https://www.
+https://discord.gg/
 
 Webinterface to show the data transmitted? Run this command:
 sudo bash /usr/local/share/adsb9g/git/install-or-update-interface.sh
