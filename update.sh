@@ -392,7 +392,7 @@ https://www.
 https://discord.gg/
 
 Webinterface to show the data transmitted? Run this command:
-sudo bash -c "$(wget -nv -O - https://github.com/rkarikari/tar1090/raw/master/install.sh)"
+' sudo bash -c "$(wget -nv -O - https://github.com/rkarikari/tar1090/raw/master/install.sh)" '
 "
 
 INPUT_IP=$(echo $INPUT | cut -d: -f1)
