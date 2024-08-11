@@ -14,29 +14,29 @@ curl -L -o /tmp/axfeed.sh https://raw.githubusercontent.com/rkarikari/adsb-9g/ma
 sudo bash /tmp/axfeed.sh
 ```
 
-## 3: Check these two URLs to check if your feed is working
+## 3: Check  if your feed is working
 
-- <https:///myip>
-- <https:///mlat-map>
+- 
+- 
 
-## 4: Optional: Install the stats package for an online map that shows only planes received by you:
+## 4: Optional: 
 
 ```
-curl -L -o /tmp/axstats.sh https:///stats.sh
-sudo bash /tmp/axstats.sh
 
-adsb9g-showurl
+
+
+
 ```
 
-### Optional: local interface for your data http://192.168.X.XX/adsbx
+###  local interface for your data http://192.168.X.XX/
 
 Install / Update:
 ```
-sudo bash /usr/local/share/adsb9g/git/install-or-update-interface.sh
+
 ```
 Remove:
 ```
-sudo bash /usr/local/share/tar1090/uninstall.sh adsbx
+
 ```
 
 ### Update the feed client without reconfiguring
