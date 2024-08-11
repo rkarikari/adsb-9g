@@ -16,16 +16,16 @@ sudo bash /tmp/axfeed.sh
 
 ## 3: Check  if your feed is working
 
-- 
-- 
 
-## 4: Optional: 
+
+
+ 
 
 ```
+sudo systemctl status adsb9g-feed
 
 
-
-
+sudo systemctl status adsb9g-mlat
 ```
 
 ###  local interface for your data http://192.168.X.XX/tar1090
