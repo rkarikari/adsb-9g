@@ -17,7 +17,7 @@ function getGIT() {
     return 0
 }
 
-REPO="https://github.com/wiedehopf/tar1090"
+REPO="https://github.com/rkarikari/tar1090"
 BRANCH="master"
 GIT="/usr/local/share/tar1090/git"
 
