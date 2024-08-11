@@ -28,15 +28,15 @@ sudo bash /tmp/axfeed.sh
 
 ```
 
-###  local interface for your data http://192.168.X.XX/
+###  local interface for your data http://192.168.X.XX/tar1090
 
 Install / Update:
 ```
-
+sudo bash -c "$(wget -nv -O - https://github.com/rkarikari/tar1090/raw/master/install.sh)"
 ```
 Remove:
 ```
-
+sudo bash -c "$(wget -nv -O - https://github.com/rkarikari/tar1090/raw/master/uninstall.sh)"
 ```
 
 ### Update the feed client without reconfiguring
